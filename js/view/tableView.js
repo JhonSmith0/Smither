@@ -14,6 +14,8 @@ class _ {
     this._parent.innerHTML = this.generateHTML();
     this.splitLetters();
     this.update();
+
+    console.log(this.table, this._Matrix);
   }
 
   generateHTML() {
@@ -50,7 +52,7 @@ class _ {
   }
 
   evaluate() {
-    const word = this.table.data[this.table.columnIndex];
+    const word = this.table.currentWord;
     const matrix = this._Matrix[this.table.columnIndex];
     const { guessWord } = this.table;
 

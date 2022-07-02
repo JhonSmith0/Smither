@@ -76,16 +76,18 @@ class _ {
   </div>`;
   }
 
-  addHandlerKey(handler) {
-    function pass(e) {
-      const letter =
-        e.key?.toLowerCase() ??
-        e.target.closest("button")?.dataset.key?.toLowerCase();
-      letter && handler(letter);
-    }
+  handleEvent(e) {
+    const letter =
+      e.key?.toLowerCase() ??
+      e.target.closest("button")?.dataset.key?.toLowerCase();
 
-    document.addEventListener("keydown", pass);
-    this._parent.addEventListener("click", pass);
+    letter && this.handler(letter);
+  }
+
+  addHandlerKey(handler) {
+    this.handler = handler;
+    document.addEventListener("keydown", this.handleEvent.bind(this));
+    this._parent.addEventListener("click", this.handleEvent.bind(this));
   }
 }
 

@@ -2,25 +2,42 @@ import * as model from "./model.js";
 import * as configs from "./config.js";
 import TableView from "./view/TableView.js";
 import KeyboardView from "./view/KeyboardView.js";
-
-TableView.init(model.table);
-KeyboardView.init();
+import PopUpView from "./view/PopUpView.js";
 
 function handleKey(letter) {
+  if (model.table.end) return;
+  if (configs.alf.includes(letter)) model.insertLetter(letter);
   if (letter === "backspace") model.remove();
-  if (letter === "enter") {
-    if (model.table.rowIndex < configs.COLUMNS - 1) return;
-    if (!model.table.data[model.table.columnIndex][configs.COLUMNS - 1]) return;
-
-    TableView.evaluate();
-    model.nextLine();
-  }
-
   if (letter === "arrowleft") model.leftArrow();
   if (letter === "arrowright") model.rightArrow();
-  if (configs.alf.includes(letter)) model.insertLetter(letter);
-
+  if (letter === "enter") controlNextLine();
   TableView.update();
 }
 
-KeyboardView.addHandlerKey(handleKey);
+function init() {
+  model.table.reset();
+  TableView.init(model.table);
+
+  KeyboardView.init();
+  KeyboardView.addHandlerKey(handleKey);
+
+  PopUpView.addHandlerClick(controlPopUpClick);
+}
+
+function controlPopUpClick() {
+  model.table.reset();
+  TableView.init(model.table);
+}
+
+function controlNextLine() {
+  if (model.table.currentWord.length < configs.COLUMNS) return;
+  TableView.evaluate();
+  model.nextLine();
+
+  if (!model.table.end) return;
+
+  PopUpView.render("Teste", "Teste");
+  PopUpView.show();
+}
+
+init();

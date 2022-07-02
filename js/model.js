@@ -7,9 +7,22 @@ export const table = {
   data: Array.from({ length: COLUMNS }, () =>
     Array.from({ length: ROWS }, () => "")
   ),
+  reset() {
+    this.rowIndex = 0;
+    this.columnIndex = 0;
+    this.end = false;
+    this.data = Array.from({ length: COLUMNS }, () =>
+      Array.from({ length: ROWS }, () => "")
+    );
+  },
+
+  get currentWord() {
+    return this.data[this.columnIndex].join("");
+  },
 };
 
 export function insertLetter(letter) {
+  if (table.end) return;
   const { data, rowIndex, columnIndex } = table;
   data[columnIndex][rowIndex] = letter;
 
@@ -32,6 +45,16 @@ export function leftArrow() {
 }
 
 export function nextLine() {
+  if (table.currentWord.length < COLUMNS) return;
+
   table.rowIndex = 0;
-  ++table.columnIndex >= ROWS && --table.columnIndex;
+
+  if (++table.columnIndex >= ROWS) {
+    --table.columnIndex;
+    table.end = true;
+  }
+}
+
+export function checkWord(word) {
+  return word === table.guessWord;
 }
