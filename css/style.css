@@ -64,7 +64,7 @@ main {
   margin-inline: auto;
 
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+
   gap: 0.5rem;
 }
 
@@ -257,22 +257,45 @@ svg {
 }
 
 .open .popup {
-  display: block;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  z-index: 5;
+
+  top: 50%;
+}
+.open .overlay {
+  z-index: 4;
 }
 
 .popup {
-  width: 60rem;
-  height: 40rem;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: rgba(17, 19, 22, 0.9);
 
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   border-radius: 3px;
 
   padding: 6.4rem 3.2rem 3.2rem 3.2rem;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: -5;
+
+  transition: all 0.3s 0s;
+}
+
+.overlay {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+
+  z-index: -5;
 }
 
 .popup-title {
@@ -295,4 +318,29 @@ svg {
 
   height: 2px;
   width: 105%;
+}
+
+.word-conteiner {
+  width: max-content;
+  margin: 3.2rem auto;
+
+  display: flex;
+  gap: 1.8rem;
+
+  font-weight: 700;
+  color: #000;
+}
+
+.word-letter {
+  width: 4.2rem;
+  aspect-ratio: 1;
+  background: #495057;
+  color: white;
+
+  display: grid;
+  place-items: center;
+}
+
+.popup .btn {
+  padding: 1.2rem 3.2rem;
 }

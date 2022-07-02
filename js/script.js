@@ -4,6 +4,8 @@
 
 import { ROWS, COLUMNS } from "./config.js";
 import alf from "./alf.js";
+import popUpView from "./view/popUpView.js";
+import tableView from "./view/tableView.js";
 
 class App {
   ROWS = ROWS;
@@ -21,18 +23,21 @@ class App {
   constructor() {
     this.keyboard.addEventListener("click", this.handleKeyboardClick);
     this.optionsConteiner.addEventListener("click", this.handleOptionsClick);
-
-    document.addEventListener("keyup", (e) => {
-      const key = e.key.toLowerCase();
-      if (key === "backspace") {
-        this.delete();
-      } else if (key === "enter") {
-        this.confirm();
-      } else if (alf.includes(key)) {
-        this.inserir(key);
-      }
-    });
+    document.addEventListener("keyup", this.handleKeyBoard);
   }
+
+  handleKeyBoard = (e) => {
+    const key = e.key.toLowerCase();
+
+    console.log(key);
+    if (key === "backspace") return tableView.delete();
+    if (key === "enter") return tableView.confirm();
+    if (alf.includes(key)) return tableView.push(key);
+  };
+
+  handlePopUp = (e) => {
+    const { target } = e;
+  };
 
   inserir(letter) {
     const box = document.querySelector(".atual");
