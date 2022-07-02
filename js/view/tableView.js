@@ -50,8 +50,8 @@ class _ {
   }
 
   evaluate() {
-    const word = this.table.data[this.table.rowIndex].join("").toLowerCase();
-    const matrix = this._Matrix[this.table.rowIndex];
+    const word = this.table.data[this.table.columnIndex];
+    const matrix = this._Matrix[this.table.columnIndex];
     const { guessWord } = this.table;
 
     [...word].forEach((letter, index) => {
@@ -60,7 +60,7 @@ class _ {
       if (guessWord[index] === letter) class_ = "correct";
       else if (guessWord.includes(letter)) class_ = "almost";
 
-      matrix[index]?.classList.add(class_);
+      matrix[index].classList.add(class_);
     });
   }
 }

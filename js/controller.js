@@ -12,8 +12,8 @@ function handleKey(letter) {
     if (model.table.rowIndex < configs.COLUMNS - 1) return;
     if (!model.table.data[model.table.columnIndex][configs.COLUMNS - 1]) return;
 
-    model.nextLine();
     TableView.evaluate();
+    model.nextLine();
   }
 
   if (letter === "arrowleft") model.leftArrow();
