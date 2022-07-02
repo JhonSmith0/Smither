@@ -2,41 +2,19 @@
 // Cliquei em apagar ele vai remover a letra e mudar o index para livre
 // Caso nao tenha livre ele coloca no ultimo block
 
+import { ROWS, COLUMNS } from "./config.js";
+import alf from "./alf.js";
+
 class App {
-  alfabeto = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-  ];
-  rows = 5;
-  columns = 5;
+  ROWS = ROWS;
+  COLUMNS = COLUMNS;
   elemento = document.querySelector("main");
   keyboard = document.querySelector(".keyboard");
 
   optionsConteiner = document.querySelector(".options-btn");
   deleteBtn = document.querySelector(".delete");
+
+  palavra = "JHONS".toLowerCase();
 
   atual;
 
@@ -50,7 +28,7 @@ class App {
         this.delete();
       } else if (key === "enter") {
         this.confirm();
-      } else if (this.alfabeto.includes(key)) {
+      } else if (alf.includes(key)) {
         this.inserir(key);
       }
     });
@@ -90,8 +68,8 @@ class App {
   delete() {
     const box = document.querySelector(".atual");
     const prev = box.previousElementSibling;
-
     if (!box) return;
+
     box.textContent = "";
     box.classList.add("free");
     box.classList.remove("blocked");
@@ -103,6 +81,29 @@ class App {
   }
 
   confirm() {
+    // Logica da palavra
+    const blockeds = [...document.querySelectorAll(".blocked")];
+    const word = blockeds
+      .map((e) => e.textContent)
+      .join("")
+      .toLowerCase();
+
+    if (word.length - this.ROWS) return;
+
+    // Dando classes alternativas baseadas na pos da palavra
+    [...word].forEach((letter, i) => {
+      let _class = "";
+
+      if (this.palavra[i] === letter) _class = "green";
+      else if (this.palavra.includes(letter)) _class = "yellow";
+      else if (!this.palavra.includes(letter)) _class = "red";
+
+      // Elemento
+      blockeds[i].classList.add(_class);
+    });
+
+    if (word === this.palavra) return;
+
     this.nextLine();
   }
 
@@ -112,15 +113,15 @@ class App {
     const last = blockeds.at(-1);
     const i = lettersInput.indexOf(last);
 
-    console.log(i, this.rows * this.columns);
+    console.log(i, this.ROWS * this.COLUMNS);
     if (i < 0) return;
-    if (i + 1 < this.rows) return;
-    if (i + 1 >= this.rows * this.columns) return;
+    if (i + 1 < this.ROWS) return;
+    if (i + 1 >= this.ROWS * this.COLUMNS) return;
 
     document.querySelector(".atual")?.classList.remove("atual");
     blockeds.forEach((b) => b.classList.remove("blocked"));
 
-    const nextOnes = lettersInput.slice(i + 1, i + 1 + this.rows);
+    const nextOnes = lettersInput.slice(i + 1, i + 1 + this.ROWS);
     nextOnes[0]?.classList.add("atual");
     nextOnes.forEach((e) => e.classList.add("free"));
 

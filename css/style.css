@@ -119,3 +119,13 @@ button {
   width: 3.2rem;
   aspect-ratio: 1;
 }
+
+.green {
+  background: rgb(2, 255, 2);
+}
+.yellow {
+  background: rgb(117, 117, 5);
+}
+.red {
+  background: red;
+}
