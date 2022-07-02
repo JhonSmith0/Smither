@@ -1,5 +1,6 @@
 *,
-*::before *::after {
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -26,7 +27,7 @@ header {
   align-items: center;
 
   max-width: 100%;
-  height: 3.8rem;
+  height: 4.8rem;
 
   padding-inline: 1.8rem;
 
@@ -36,10 +37,22 @@ header {
 .icon-box {
   height: 100%;
   aspect-ratio: 1;
-  border: solid 1px white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0.9rem;
+}
+
+.icon-box svg {
+  width: 100%;
+  height: 100%;
+  fill: white;
 }
 
 .title {
+  width: max-content;
   margin-inline: auto;
   color: white;
   text-transform: uppercase;
@@ -235,4 +248,51 @@ svg {
 }
 .red {
   background: red;
+}
+
+/* POPUP */
+
+.open .conteiner {
+  filter: blur(4px);
+}
+
+.open .popup {
+  display: block;
+}
+
+.popup {
+  width: 60rem;
+  height: 40rem;
+  background: rgba(17, 19, 22, 0.9);
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 3px;
+
+  padding: 6.4rem 3.2rem 3.2rem 3.2rem;
+}
+
+.popup-title {
+  letter-spacing: 2px;
+  font-weight: 300;
+
+  padding-bottom: 6px;
+
+  position: relative;
+
+  margin-left: unset;
+}
+
+.border-bottom::after {
+  position: absolute;
+
+  content: "";
+  left: 0;
+  bottom: 0;
+
+  height: 2px;
+  width: 105%;
 }
