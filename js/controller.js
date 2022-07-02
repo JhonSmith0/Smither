@@ -8,6 +8,7 @@ function handleKey(letter) {
   if (model.table.end) return;
   if (configs.alf.includes(letter)) model.insertLetter(letter);
   if (letter === "backspace") model.remove();
+  if (letter === "delete") model.remove();
   if (letter === "arrowleft") model.leftArrow();
   if (letter === "arrowright") model.rightArrow();
   if (letter === "enter") controlNextLine();
@@ -31,6 +32,7 @@ function controlPopUpClick() {
 
 function controlNextLine() {
   if (model.table.currentWord.length < configs.COLUMNS) return;
+
   TableView.evaluate();
   model.nextLine();
 

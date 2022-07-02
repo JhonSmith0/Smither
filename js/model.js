@@ -45,7 +45,8 @@ export function leftArrow() {
 }
 
 export function nextLine() {
-  if (table.currentWord.length < COLUMNS) return;
+  const word = table.currentWord;
+  if (word.length < COLUMNS) return;
 
   table.rowIndex = 0;
 
@@ -53,6 +54,8 @@ export function nextLine() {
     --table.columnIndex;
     table.end = true;
   }
+
+  table.end = checkWord(word);
 }
 
 export function checkWord(word) {

@@ -26,18 +26,18 @@ class _ {
 
   handlerClick = (e) => {
     const button = e.target.closest("button");
-
-    this.hidde();
-
-    console.log(button);
-    button?.classList.contains("confirm") && this.handler();
   };
 
   addHandlerClick(handler) {
     this.handler = handler;
 
-    this._overlay.addEventListener("click", this.handlerClick);
-    this._parent.addEventListener("click", this.handlerClick);
+    this._overlay.addEventListener("click", this.hidde);
+    this._parent.addEventListener("click", (e) => {
+      const button = e.target.closest("button");
+
+      button && this.hidde();
+      button?.classList.contains("confirm") && this.handler();
+    });
   }
 }
 
