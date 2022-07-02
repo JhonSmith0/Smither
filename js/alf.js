@@ -18,6 +18,7 @@ export default [
   "q",
   "r",
   "s",
+  "t",
   "u",
   "v",
   "w",

@@ -92,11 +92,10 @@ class App {
 
     // Dando classes alternativas baseadas na pos da palavra
     [...word].forEach((letter, i) => {
-      let _class = "";
+      let _class = "red";
 
       if (this.palavra[i] === letter) _class = "green";
       else if (this.palavra.includes(letter)) _class = "yellow";
-      else if (!this.palavra.includes(letter)) _class = "red";
 
       // Elemento
       blockeds[i].classList.add(_class);
