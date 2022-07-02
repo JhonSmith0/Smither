@@ -240,13 +240,13 @@ svg {
   background: #495057;
 }
 
-.green {
+.correct {
   background: rgb(2, 255, 2);
 }
-.yellow {
+.almost {
   background: rgb(117, 117, 5);
 }
-.red {
+.incorrect {
   background: red;
 }
 

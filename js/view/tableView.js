@@ -2,7 +2,7 @@ import { ROWS, COLUMNS } from "../config.js";
 class _ {
   _element = document.querySelector("main");
   _letters;
-  _row = 1;
+  _row = 0;
   constructor() {
     this.init();
   }
@@ -16,11 +16,7 @@ class _ {
     ).join("");
 
     this._letters = [...this._element.querySelectorAll(".letter-input")];
-    const fstone = this._letters.slice(0, COLUMNS);
-
-    fstone.forEach((e) => e.classList.add("free"));
-    fstone[0].classList.add("atual");
-    fstone.at(-1).classList.add("max");
+    this.nextLine();
   }
 
   insert(letter, index) {
@@ -35,12 +31,11 @@ class _ {
 
   get next() {
     if (this.max) return this.atual;
-
-    return this.atual.nextElementSibling;
+    return this.atual?.nextElementSibling;
   }
 
   get prev() {
-    return this.atual.previousElementSibling;
+    return this.atual?.previousElementSibling;
   }
 
   push(letter) {
@@ -48,6 +43,7 @@ class _ {
     // proximo => atual
 
     const next = this.next ?? this.atual;
+    if (!next) return;
 
     this.atual.textContent = letter;
     this.atual.classList.add("blocked");
@@ -65,6 +61,7 @@ class _ {
 
     const prev = this.prev ?? this.atual;
     const atual = this.atual;
+    if (!atual) return;
 
     atual.textContent = "";
     atual.classList.add("free");
@@ -76,8 +73,50 @@ class _ {
     prev.classList.remove("free");
   }
 
+  confirm() {
+    const fstone = this.fstOne;
+    const word = fstone
+      .map((e) => e.textContent)
+      .join("")
+      .toLowerCase();
+    if (word.length !== this.guessWord.length) return;
+
+    [...word].forEach((letter, i) => {
+      let cl = "incorrect";
+      if (this.guessWord[i] === letter) cl = "correct";
+      else if (this.guessWord.includes(letter)) cl = "almost";
+
+      fstone[i].classList.add(cl);
+    });
+
+    this.nextLine();
+  }
+
+  nextLine() {
+    if (!this._row >= ROWS) return;
+    this.fstOne.forEach((e) => {
+      e.classList.remove("atual");
+      e.classList.remove("free");
+      e.classList.remove("blocked");
+    });
+
+    this._row++;
+    const fstone = this.fstOne;
+    if (!fstone.length) return;
+
+    fstone.forEach((e) => e.classList.add("free"));
+    fstone[0].classList.add("atual");
+    fstone.at(-1).classList.add("max");
+  }
+
+  get fstOne() {
+    const start = this._row * COLUMNS - COLUMNS;
+    const fstone = this._letters.slice(start, start + COLUMNS);
+    return fstone;
+  }
+
   get max() {
-    return this.atual.classList.contains("max");
+    return this.atual?.classList.contains("max");
   }
 }
 
