@@ -1,0 +1,121 @@
+*,
+*::before *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: sans-serif;
+}
+
+body {
+  background: rgb(33, 37, 41);
+  background: linear-gradient(
+    90deg,
+    rgba(33, 37, 41, 1) 0%,
+    rgba(52, 58, 64, 1) 100%
+  );
+
+  background: rgb(33, 37, 41);
+  background: linear-gradient(
+    90deg,
+    rgba(33, 37, 41, 1) 0%,
+    rgba(52, 58, 64, 1) 47%
+  );
+}
+
+.conteiner {
+  max-width: 35rem;
+  height: 45rem;
+
+  margin: 4.2rem auto;
+}
+
+header {
+  display: flex;
+  align-items: center;
+
+  max-width: 100%;
+  height: 3.8rem;
+
+  padding-inline: 1.8rem;
+
+  margin-bottom: 3.2rem;
+}
+
+.icon-box {
+  height: 100%;
+  aspect-ratio: 1;
+  border: solid 1px white;
+}
+
+.title {
+  margin-inline: auto;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+main {
+  padding-inline: 5.6rem;
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.letter-input {
+  border: solid 1px black;
+  aspect-ratio: 1;
+
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-weight: 700;
+
+  display: grid;
+  place-items: center;
+  color: white;
+}
+
+.options-btn {
+  width: max-content;
+  margin-inline: auto;
+  display: flex;
+  margin-block: 3.2rem;
+  height: 2.8rem;
+  gap: 3.2rem;
+}
+
+button {
+  border: none;
+  border-radius: none;
+  cursor: pointer;
+}
+
+.options-btn .btn {
+  height: 100%;
+  aspect-ratio: 16/9;
+}
+
+.keyboard {
+  max-width: 100%;
+  margin-inline: auto;
+
+  display: grid;
+  gap: 0.4rem;
+}
+
+.keyboard-line {
+  width: max-content;
+  display: flex;
+  gap: inherit;
+  margin-inline: auto;
+}
+
+.key {
+  width: 3.2rem;
+  aspect-ratio: 1;
+}
