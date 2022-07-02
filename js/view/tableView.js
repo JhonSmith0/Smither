@@ -1,122 +1,67 @@
-import { ROWS, COLUMNS } from "../config.js";
+import { COLUMNS } from "../config.js";
+
 class _ {
-  _element = document.querySelector("main");
-  _letters;
-  _row = 0;
+  _parent = document.querySelector("main");
+  _letters = [];
+  _Matrix = [];
+
   constructor() {
-    this.init();
+    this._parent.style.gridTemplateColumns = `repeat(${COLUMNS}, 1fr)`;
   }
 
-  init() {
-    this._element.style.gridTemplateColumns = `repeat(${COLUMNS}, 1fr)`;
-
-    this._element.innerHTML = Array.from(
-      { length: ROWS * COLUMNS },
-      (_) => `<div class="letter-input"></div>`
-    ).join("");
-
-    this._letters = [...this._element.querySelectorAll(".letter-input")];
-    this.nextLine();
+  init(table) {
+    this.table = table;
+    this._parent.innerHTML = this.generateHTML();
+    this.splitLetters();
+    this.update();
   }
 
-  insert(letter, index) {
-    const i = index ?? this._letters.indexOf(this.atual);
-    const box = this._letters[i];
-    box.textContent = letter;
+  generateHTML() {
+    return this.table.data
+      .flat(2)
+      .map((e) => `<div class="letter-input"></div>`)
+      .join("");
   }
 
-  get atual() {
-    return document.querySelector(".atual");
+  splitLetters() {
+    this._letters = [...document.querySelectorAll(".letter-input")];
+
+    const splited = [];
+    for (let i = 1; i < COLUMNS + 1; i++) {
+      const arr = this._letters.slice(i * COLUMNS - COLUMNS, i * COLUMNS);
+      splited.push(arr);
+    }
+
+    this._Matrix = splited;
+    return splited;
   }
 
-  get next() {
-    if (this.max) return this.atual;
-    return this.atual?.nextElementSibling;
-  }
+  update() {
+    const { rowIndex, columnIndex, data } = this.table;
+    const column = data[columnIndex];
+    const matrix = this._Matrix[columnIndex];
 
-  get prev() {
-    return this.atual?.previousElementSibling;
-  }
-
-  push(letter) {
-    // atual => blocked
-    // proximo => atual
-
-    const next = this.next ?? this.atual;
-    if (!next) return;
-
-    this.atual.textContent = letter;
-    this.atual.classList.add("blocked");
-    this.atual.classList.remove("free");
-    this.atual.classList.remove("atual");
-
-    next.classList.add("atual");
-    next.classList.remove("free");
-    next.classList.remove("blocked");
-  }
-
-  delete() {
-    // atual = free
-    // prev = atual
-
-    const prev = this.prev ?? this.atual;
-    const atual = this.atual;
-    if (!atual) return;
-
-    atual.textContent = "";
-    atual.classList.add("free");
-    atual.classList.remove("blocked");
-    atual.classList.remove("atual");
-
-    prev.classList.add("atual");
-    prev.classList.remove("blocked");
-    prev.classList.remove("free");
-  }
-
-  confirm() {
-    const fstone = this.fstOne;
-    const word = fstone
-      .map((e) => e.textContent)
-      .join("")
-      .toLowerCase();
-    if (word.length !== this.guessWord.length) return;
-
-    [...word].forEach((letter, i) => {
-      let cl = "incorrect";
-      if (this.guessWord[i] === letter) cl = "correct";
-      else if (this.guessWord.includes(letter)) cl = "almost";
-
-      fstone[i].classList.add(cl);
+    column.forEach((letter, index) => {
+      matrix[index].textContent = letter;
     });
 
-    this.nextLine();
+    document.querySelector(".atual")?.classList.remove("atual");
+    matrix[rowIndex]?.classList.add("atual");
   }
 
-  nextLine() {
-    if (!this._row >= ROWS) return;
-    this.fstOne.forEach((e) => {
-      e.classList.remove("atual");
-      e.classList.remove("free");
-      e.classList.remove("blocked");
+  evaluate() {
+    const word = this.table.data[this.table.rowIndex].join("").toLowerCase();
+    const matrix = this._Matrix[this.table.rowIndex];
+    const { guessWord } = this.table;
+
+    [...word].forEach((letter, index) => {
+      let class_ = "incorrect";
+
+      if (guessWord[index] === letter) class_ = "correct";
+      else if (guessWord.includes(letter)) class_ = "almost";
+
+      matrix[index]?.classList.add(class_);
     });
-
-    this._row++;
-    const fstone = this.fstOne;
-    if (!fstone.length) return;
-
-    fstone.forEach((e) => e.classList.add("free"));
-    fstone[0].classList.add("atual");
-    fstone.at(-1).classList.add("max");
-  }
-
-  get fstOne() {
-    const start = this._row * COLUMNS - COLUMNS;
-    const fstone = this._letters.slice(start, start + COLUMNS);
-    return fstone;
-  }
-
-  get max() {
-    return this.atual?.classList.contains("max");
   }
 }
 
