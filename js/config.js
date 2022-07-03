@@ -1,6 +1,5 @@
 export const ROWS = 5;
 export const COLUMNS = 5;
-export const words = [];
 export const alf = [
   "a",
   "b",

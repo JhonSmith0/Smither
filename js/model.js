@@ -1,9 +1,10 @@
 import { COLUMNS, ROWS } from "./config.js";
+import words from "../public/words.js";
 
 export const table = {
   rowIndex: 0, // Walk to sides
   columnIndex: 0, // Walk up and down
-  guessWord: "JHONS".toLowerCase(),
+  guessWord: "",
   data: Array.from({ length: COLUMNS }, () =>
     Array.from({ length: ROWS }, () => "")
   ),
@@ -14,6 +15,14 @@ export const table = {
     this.data = Array.from({ length: COLUMNS }, () =>
       Array.from({ length: ROWS }, () => "")
     );
+    this.generateWord();
+  },
+
+  generateWord() {
+    const i = Math.ceil(Math.random() * (words.length - 1));
+    const word = words[i];
+    this.guessWord = word;
+    return this.guessWord;
   },
 
   get currentWord() {
@@ -50,12 +59,11 @@ export function nextLine() {
 
   table.rowIndex = 0;
 
+  table.end = checkWord(word);
   if (++table.columnIndex >= ROWS) {
     --table.columnIndex;
     table.end = true;
   }
-
-  table.end = checkWord(word);
 }
 
 export function checkWord(word) {

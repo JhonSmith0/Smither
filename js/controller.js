@@ -38,7 +38,12 @@ function controlNextLine() {
 
   if (!model.table.end) return;
 
-  PopUpView.render("Teste", "Teste");
+  const msg = model.checkWord(model.table.currentWord)
+    ? "Parabéns você ganhou!"
+    : "Não foi dessa vez :(";
+
+  console.log(msg);
+  PopUpView.render(msg, model.table.guessWord);
   PopUpView.show();
 }
 

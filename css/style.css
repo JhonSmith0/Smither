@@ -328,7 +328,6 @@ svg {
   gap: 1.8rem;
 
   font-weight: 700;
-  color: #000;
 }
 
 .word-letter {
@@ -336,9 +335,11 @@ svg {
   aspect-ratio: 1;
   background: #495057;
   color: white;
+  font-size: 2rem;
 
   display: grid;
   place-items: center;
+  text-transform: uppercase;
 }
 
 .popup .btn {
