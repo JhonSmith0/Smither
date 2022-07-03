@@ -241,13 +241,13 @@ svg {
 }
 
 .correct {
-  background: rgb(2, 255, 2);
+  background: #29b281;
 }
 .almost {
-  background: rgb(117, 117, 5);
+  background: #007c4f;
 }
 .incorrect {
-  background: red;
+  background: #371c2a;
 }
 
 /* POPUP */
