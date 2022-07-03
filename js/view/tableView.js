@@ -14,8 +14,6 @@ class _ {
     this._parent.innerHTML = this.generateHTML();
     this.splitLetters();
     this.update();
-
-    console.log(this.table, this._Matrix);
   }
 
   generateHTML() {
