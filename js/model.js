@@ -67,5 +67,6 @@ export function nextLine() {
 }
 
 export function checkWord(word) {
-  return word === table.guessWord;
+  console.log(word, table.guessWord);
+  return word.toLowerCase() === table.guessWord.toLowerCase();
 }

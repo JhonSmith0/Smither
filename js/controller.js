@@ -23,6 +23,7 @@ function init() {
   KeyboardView.addHandlerKey(handleKey);
 
   PopUpView.addHandlerClick(controlPopUpClick);
+  console.log(model.table.guessWord);
 }
 
 function controlPopUpClick() {
@@ -31,6 +32,9 @@ function controlPopUpClick() {
 }
 
 function controlNextLine() {
+  const correct = model.checkWord(model.table.currentWord);
+  const msg = correct ? "Parabéns você ganhou!" : "Não foi dessa vez :(";
+
   if (model.table.currentWord.length < configs.COLUMNS) return;
 
   TableView.evaluate();
@@ -38,11 +42,6 @@ function controlNextLine() {
 
   if (!model.table.end) return;
 
-  const msg = model.checkWord(model.table.currentWord)
-    ? "Parabéns você ganhou!"
-    : "Não foi dessa vez :(";
-
-  console.log(msg);
   PopUpView.render(msg, model.table.guessWord);
   PopUpView.show();
 }
